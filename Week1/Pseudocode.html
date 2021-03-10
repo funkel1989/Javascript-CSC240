@@ -1,0 +1,63 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>Employee Pay Sheet</title>
+        <meta name="description" content="Form and table used to set and display employee's pay rates">
+        <script type="application/javascript">
+        // Begin Pseudocode for Week 1 assignment
+            // function calculatePay(payData) {
+            //     set grossPay = 0;
+
+            //     if (payData.hours > 40) {
+            //         set primeTimePay = 40 * payData.rate;
+            //         set overtimePay = (payData.hours - 40) * payData.overtimeRate;
+            //         set grossPay = primeTimePay + overtimePay;
+            //     } else {
+            //         set grossPay = payData.hours * payData.rate;
+            //     }
+
+            //     payData.grossPay = grossPay;
+            //     payData.taxes = grossPay * payData.taxRate;
+            //     payData.netPay = grossPay - payData.deductions - taxes;
+
+            //     return payData;
+            // }
+
+            // function calculateAndSave() {
+            //     set name = getName();
+            //     set rate = getRate();
+            //     set hourCount = getHourCount();
+            //     set overtimeRate = getOvertimeRate();
+            //     set deductionAmount = getDeductions();
+            //     set taxRate = getTaxRate();
+
+            //     set payData = {
+            //         employeeName: name,
+            //         payRate: rate,
+            //         hours: hourCount,
+            //         overtimeRate: overtimeRate,
+            //         deductions: deductionAmount,
+            //         taxRate: taxRate
+            //     };
+
+            //     set calculatedPay = calculatePay(payData);
+
+            //     savePay(calculatedPay); // Would call database or backend service to save pay data and update local state on screen for user to see in table
+            // }
+        </script>
+    </head>
+    <body>
+        <main>
+            <form action="post">
+                <input type="text" id="employeeNameInput">
+                <input type="text" id="employeeHourlyRate">
+                <input type="text" id="employeeTotalHours">
+                <input type="text" id="employeeOvertimeRate">
+                <input type="text" id="employeeTotalDeductions">
+                <input type="text" id="employeeTaxRate">
+                <input type="submit" onclick="calculateAndSave()" value="Save And Calculate Employee Pay">
+            </form>
+        </main>
+    </body>
+</html>
