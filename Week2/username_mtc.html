@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>School Account Creation</title>
+    <style>
+      html {
+        height: 100%;
+      }
+
+      body {
+        height: 100%;
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        display: grid;
+        justify-items: center;
+        align-items: center;
+        background-color: #3a3a3a;
+      }
+
+      #main-holder {
+        width: 50%;
+        height: 70%;
+        display: grid;
+        justify-items: center;
+        align-items: center;
+        background-color: white;
+        border-radius: 7px;
+        box-shadow: 0px 0px 5px 2px black;
+      }
+
+      #sign-up-form {
+        align-self: flex-start;
+        display: grid;
+        justify-items: center;
+        align-items: center;
+      }
+
+      .sign-up-form-field::placeholder {
+        color: #3a3a3a;
+      }
+
+      .sign-up-form-field {
+        border: none;
+        border-bottom: 1px solid #3a3a3a;
+        margin-bottom: 10px;
+        border-radius: 3px;
+        outline: none;
+        padding: 0px 0px 5px 5px;
+      }
+
+      #sign-up-form-submit {
+        width: 100%;
+        padding: 7px;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-weight: bold;
+        background-color: #3a3a3a;
+        cursor: pointer;
+        outline: none;
+      }
+    </style>
+
+    <script>
+      function submitForm() {
+        const signUpForm = document.getElementById('sign-up-form');
+        const signUpButton = document.getElementById('sign-up-form-submit');
+
+        const firstName = signUpForm.firstName.value;
+        const lastName = signUpForm.lastName.value;
+        const schoolName = signUpForm.schoolName.value;
+
+        const userName = buildUserName(firstName, lastName, schoolName);
+
+        alert(`Your username is: ${userName}`);
+      }
+
+      function buildUserName(first, last, school) {
+        const firstInitial = first.charAt(0);
+        const lastInitial = last.charAt(0);
+        const schoolFirstWord = school.replace(/ .*/, '');
+
+        return firstInitial + lastInitial + schoolFirstWord;
+      }
+    </script>
+  </head>
+  <body>
+    <main id="main-holder">
+      <h1 id="login-header">Sign Up</h1>
+
+      <form id="sign-up-form">
+        <input
+          type="text"
+          name="firstName"
+          id="sign-up-form-field"
+          class="firstNameField"
+          placeholder="First Name"
+        />
+        <input
+          type="text"
+          name="lastName"
+          id="sign-up-form-field"
+          class="lastNameField"
+          placeholder="Last Name"
+        />
+        <input
+          type="text"
+          name="schoolName"
+          id="sign-up-form-field"
+          class="schoolNameField"
+          placeholder="School Name"
+        />
+        <input
+          type="submit"
+          value="Create Account"
+          onclick="submitForm()"
+          id="sign-up-form-submit"
+        />
+      </form>
+    </main>
+  </body>
+</html>
