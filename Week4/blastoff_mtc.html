@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Starship Launch Countdown</title>
+    <style>
+      html {
+        height: 100%;
+      }
+
+      body {
+        height: 100%;
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        display: grid;
+        justify-items: center;
+        align-items: center;
+        background-color: #3a3a3a;
+      }
+
+      #main-holder {
+        width: 50%;
+        height: 80%;
+        display: grid;
+        justify-items: center;
+        align-items: center;
+        background-color: white;
+        border-radius: 7px;
+        box-shadow: 0px 0px 5px 2px black;
+      }
+
+      #container {
+        align-self: flex-start;
+        display: grid;
+        justify-items: center;
+        align-items: center;
+      }
+
+      #button {
+        width: 100%;
+        padding: 7px;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-weight: bold;
+        background-color: #3a3a3a;
+        cursor: pointer;
+        outline: none;
+        margin-bottom: 2px;
+      }
+
+      .base-timer {
+        position: relative;
+        height: 300px;
+        width: 300px;
+      }
+
+      .base-timer__circle {
+        fill: none;
+        stroke: none;
+      }
+
+      .base-timer__path-elapsed {
+        stroke-width: 7px;
+        stroke: grey;
+      }
+
+      .base-timer__label {
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 48px;
+      }
+    </style>
+
+    <script>
+      const TIME_LIMIT = 20;
+
+      let timePassed = 0;
+      let timeLeft = TIME_LIMIT;
+      let timerInterval = null;
+
+      function setInitialTimeSpan() {
+        document.getElementById('base-timer-label').innerHTML = formatTimeLeft(
+          timeLeft
+        );
+
+        document.getElementById('blastoff-notification').innerHTML = '';
+      }
+
+      function startTimer() {
+        setInitialTimeSpan();
+        timerInterval = setInterval(() => {
+          timePassed = timePassed += 1;
+          timeLeft = TIME_LIMIT - timePassed;
+
+          document.getElementById(
+            'base-timer-label'
+          ).innerHTML = formatTimeLeft(timeLeft);
+        }, 1000);
+      }
+
+      function formatTimeLeft(time) {
+        const minutes = Math.floor(time / 60);
+        let seconds = time % 60;
+
+        if (seconds < 10) {
+          seconds = `0${seconds}`;
+        }
+        console.log(seconds);
+        if (seconds == 00) {
+          document.getElementById('blastoff-notification').innerHTML =
+            'BLAST OFF!!!';
+          clearInterval(timerInterval);
+          timeLeft = TIME_LIMIT;
+          timePassed = 0;
+          return `0:00`;
+        }
+
+        return `${minutes}:${seconds}`;
+      }
+
+      window.onload = function () {
+        setInitialTimeSpan();
+      };
+    </script>
+  </head>
+  <body>
+    <main id="main-holder">
+      <h1 id="login-header">Prepare for blastoff!!</h1>
+      <div id="container">
+        <h2 id="blastoff-notification"></h2>
+        <div class="base-timer">
+          <svg
+            class="base-timer__svg"
+            viewBox="0 0 100 100"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g class="base-timer__circle">
+              <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45" />
+            </g>
+          </svg>
+          <span class="base-timer__label" id="base-timer-label"></span>
+        </div>
+        <input
+          type="submit"
+          value="Start Count Down"
+          onclick="startTimer()"
+          id="button"
+        />
+
+        <input
+          type="submit"
+          value="Reset Timer"
+          onclick="setInitialTimeSpan()"
+          id="button"
+        />
+      </div>
+    </main>
+  </body>
+</html>
