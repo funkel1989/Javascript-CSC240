@@ -1,156 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Team Count</title>
     <style>
-        html {
-          height: 100%;
-        }
-  
-        body {
-          height: 100%;
-          margin: 0;
-          font-family: Arial, Helvetica, sans-serif;
-          display: grid;
-          justify-items: center;
-          align-items: center;
-          background-color: #3a3a3a;
-        }
-  
-        #main-holder {
-          width: 50%;
-          height: 70%;
-          display: grid;
-          justify-items: center;
-          align-items: center;
-          background-color: white;
-          border-radius: 7px;
-          box-shadow: 0px 0px 5px 2px black;
-        }
-  
-        .form-field::placeholder {
-          color: #3a3a3a;
-        }
-  
-        .form-field {
-          border: none;
-          border-bottom: 1px solid #3a3a3a;
-          margin-bottom: 10px;
-          border-radius: 3px;
-          outline: none;
-          padding: 0px 0px 5px 5px;
-        }
-  
-        #submit-button {
-          width: 100%;
-          padding: 7px;
-          border: none;
-          border-radius: 5px;
-          color: white;
-          font-weight: bold;
-          background-color: #3a3a3a;
-          cursor: pointer;
-          outline: none;
-        }
-      </style>
-</head>
-<body>
-    <main>
-        <h3>Total Children: <span id="total">0</span></h3>
-        <h3>Junior Children: <span id="junior">0</span></h3>
-        <h3>Intermediate Children: <span id="intermediate">0</span></h3>
-        <h3>Senior Children: <span id="senior">0</span></h3>
+      html {
+        height: 100%;
+      }
 
-            <input
-            type="text"
-            name="name"
-            id="nameField"
-            class="form-field"
-            placeholder="Example: Joe"
-          />
-          <input
-            type="text"
-            name="age"
-            id="ageField"
-            class="form-field"
-            placeholder="4-15 allowed"
-          />
-          <input
-            type="submit"
-            value="Add Child"
-            onclick="addChild()"
-            class="submit-button"
-            id="submitButton"
-          />
-    </main>
+      body {
+        height: 100%;
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        display: grid;
+        justify-items: center;
+        align-items: center;
+        background-color: #3a3a3a;
+      }
+
+      #main-holder {
+        width: 50%;
+        height: 70%;
+        display: grid;
+        justify-items: center;
+        align-items: center;
+        background-color: white;
+        border-radius: 7px;
+        box-shadow: 0px 0px 5px 2px black;
+      }
+
+      .form-field::placeholder {
+        color: #3a3a3a;
+      }
+
+      .form-field {
+        border: none;
+        border-bottom: 1px solid #3a3a3a;
+        margin-bottom: 10px;
+        border-radius: 3px;
+        outline: none;
+        padding: 0px 0px 5px 5px;
+      }
+
+      #submit-button {
+        width: 100%;
+        padding: 7px;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-weight: bold;
+        background-color: #3a3a3a;
+        cursor: pointer;
+        outline: none;
+      }
+    </style>
 
     <script>
-        function addChild() {
-            console.log("start");
-            const children = [];
+      const children = [];
 
-            const name = document.getElementById("nameField").innerHTML;
-            const age = document.getElementById("ageField").innerHTML;
+      function addChild() {
+        console.log('start');
 
-            if (!name || !age) {
-                console.log("name or age is missing");
-                alert("Name and age are required to add a child");
-                return;
-            }
+        const name = document.getElementById('nameField').value;
+        const age = document.getElementById('ageField').value;
 
-            if (age > 15 || age < 4) {
-                console.log("Child out of range");
-                alert("Child is out of age group criteria");
-            }
+        console.log(`name: ${name}`);
+        console.log(`age: ${age}`);
 
-            const child = {
-                name,
-                age
-            };
-            console.log(`Child: ${child}`);
-
-            children.push(child);
-
-            organizeChildren(children);
+        if (!name || !age) {
+          console.log('name or age is missing');
+          alert('Name and age are required to add a child');
+          return;
         }
 
-        function organizeChildren(children) {
-            const soccerGroupsByAge = {
-                junior = [],
-                intermediate = [],
-                senior = [],
-                total = children.length
-            };
-
-            for (let child of children) {
-                if (child.age > 3 && child.age < 8) {
-                    soccerGroupsByAge.junior.push(child);
-                    break;
-                }
-
-                if (child.age > 7 && child.age < 11) {
-                    soccerGroupsByAge.intermediate.push(child);
-                    break;
-                }
-
-                if (child.age > 11 && child.age < 16) {
-                    soccerGroupsByAge.senior.push(child);
-                    break;
-                } 
-            }
-
-            updateWindow(soccerGroupsByAge);
+        if (age > 15 || age < 5) {
+          console.log('Child out of range');
+          alert('Child is out of age group criteria');
+          return;
         }
 
-        function updateWindow(groups){
-            const total = document.getElementById("total").innerHTML = groups.total;
-            const junior = document.getElementById("junior").innerHTML = groups.junior.length;
-            const intermediate = document.getElementById("intermediate").innerHTML = groups.intermediate.length;
-            const senior = document.getElementById("senior").innerHTML = groups.senior.length;
+        const child = {
+          name,
+          age,
+        };
+
+        console.log(`Child: ${JSON.stringify(child, null, 2)}`);
+
+        children.push(child);
+
+        organizeChildren();
+      }
+
+      function organizeChildren() {
+        const soccerGroupsByAge = {
+          junior: [],
+          intermediate: [],
+          senior: [],
+          total: children.length,
+        };
+
+        for (let child of children) {
+          if (child.age > 3 && child.age < 8) {
+            soccerGroupsByAge.junior.push(child);
+          }
+
+          if (child.age > 7 && child.age < 11) {
+            soccerGroupsByAge.intermediate.push(child);
+          }
+
+          if (child.age > 11 && child.age < 16) {
+            soccerGroupsByAge.senior.push(child);
+          }
         }
+
+        updateWindow(soccerGroupsByAge);
+      }
+
+      function updateWindow(groups) {
+        console.log(JSON.stringify(groups, null, 2));
+        const total = (document.getElementById('total').innerHTML =
+          groups.total);
+        const junior = (document.getElementById('junior').innerHTML =
+          groups.junior.length);
+        const intermediate = (document.getElementById(
+          'intermediate'
+        ).innerHTML = groups.intermediate.length);
+        const senior = (document.getElementById('senior').innerHTML =
+          groups.senior.length);
+      }
     </script>
-</body>
+  </head>
+  <body>
+    <main>
+      <h3>Total Children: <span id="total">0</span></h3>
+      <h3>Junior Children: <span id="junior">0</span></h3>
+      <h3>Intermediate Children: <span id="intermediate">0</span></h3>
+      <h3>Senior Children: <span id="senior">0</span></h3>
+
+      <input
+        type="text"
+        name="name"
+        id="nameField"
+        class="form-field"
+        placeholder="Example: Joe"
+      />
+      <input
+        type="text"
+        name="age"
+        id="ageField"
+        class="form-field"
+        placeholder="4-15 allowed"
+      />
+      <input
+        type="submit"
+        value="Add Child"
+        onclick="addChild()"
+        class="submit-button"
+        id="submitButton"
+      />
+    </main>
+  </body>
 </html>
