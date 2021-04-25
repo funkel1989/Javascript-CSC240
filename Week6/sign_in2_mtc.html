@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up</title>
+    <style>
+      html {
+        height: 100%;
+      }
+
+      body {
+        height: 100%;
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        display: grid;
+        justify-items: center;
+        align-items: center;
+        background-color: #3a3a3a;
+      }
+
+      #main-holder {
+        width: 50%;
+        height: 70%;
+        display: grid;
+        justify-items: center;
+        align-items: center;
+        background-color: white;
+        border-radius: 7px;
+        box-shadow: 0px 0px 5px 2px black;
+      }
+
+      .form-field::placeholder {
+        color: #3a3a3a;
+      }
+
+      .form-field {
+        border: none;
+        border-bottom: 1px solid #3a3a3a;
+        margin-bottom: 10px;
+        border-radius: 3px;
+        outline: none;
+        display: block;
+        padding: 0px 0px 5px 5px;
+      }
+
+      #submit-button {
+        width: 100%;
+        padding: 7px;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-weight: bold;
+        background-color: #3a3a3a;
+        cursor: pointer;
+        outline: none;
+      }
+    </style>
+
+    <script>
+        function formatPhone(number) {
+            console.log(`Number: ${number}`);
+            if (number.length === 3) {
+                return `(${number})`;
+            }
+
+            if (number.length === 8) {
+                return `${number}-`;
+            }
+            return number;
+        }
+    </script>
+  </head>
+  <body>
+    <main>
+      <form action="" method="POST" autocomplete="off">
+        <input
+          required
+          autofocus
+          type="text"
+          name="firstName"
+          id="firstName"
+          class="form-field"
+          placeholder="Example: Joe"
+        />
+        <input
+          required
+          type="text"
+          name="lastName"
+          id="lastName"
+          class="form-field"
+          placeholder="Example: jeffords"
+        />
+        <input
+          required
+          type="text"
+          name="streetAddress"
+          id="streetAddress"
+          class="form-field"
+          placeholder="Example: 222 Street st."
+        />
+        <input
+          required
+          type="text"
+          name="city"
+          id="city"
+          class="form-field"
+          placeholder="Example: Washington"
+        />
+        <input
+          required
+          type="text"
+          name="state"
+          id="state"
+          class="form-field"
+          placeholder="Example: MI"
+        />
+        <input
+          required
+          type="text"
+          name="zipCode"
+          id="zipCode"
+          class="form-field"
+          placeholder="Example: 55741"
+        />
+        <input
+          required
+          type="text"
+          name="emailAddress"
+          id="emailAddress"
+          class="form-field"
+          placeholder="Example: email@email.com"
+        />
+        <input
+          required
+          type="tel"
+          name="phoneNumber"
+          id="phoneNumber"
+          pattern="[(][0-9]{3}[)][0-9]{3}-[0-9]{4}"
+          maxlength="13"
+          class="form-field"
+          onkeypress="this.value=formatPhone(this.value);"
+          placeholder="(555)444-7777"
+        />
+        <input
+          type="submit"
+          value="Submit"
+          class="submit-button"
+          id="submitButton"
+        />
+      </form>
+    </main>
+  </body>
+</html>
