@@ -156,6 +156,29 @@
           onkeypress="this.value=formatPhone(this.value);"
           placeholder="(555)444-7777"
         />
+        <label class="label" for="userName">User Name</label>
+        <input
+          required
+          type="text"
+          name="userName"
+          id="userName"
+          minlength="4"
+          maxlength="20"
+          class="form-field"
+          placeholder="myspecialname"
+        />
+        <label class="label" for="password">Password</label>
+        <input
+          required
+          type="password"
+          name="password"
+          id="password"
+          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*?[0-9])(?=.*?[!@#$])"
+          minlength="4"
+          maxlength="12"
+          class="form-field"
+          placeholder="************"
+        />
         <input
           type="submit"
           value="Submit"
