@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dice Game</title>
+    <style></style>
+    <script>
+      const winnerEnum = Object.freeze({ Player: 1, Computer: 2, Tie: 3 });
+
+      const gameState = {
+        computerScore: 0,
+        playerScore: 0,
+        maxScore: 100,
+        gameIsWon: false,
+        activeGame: false,
+      };
+
+      // onclick event for start game executions this function
+      function startGame() {
+        // set UI elements for game state and game UI
+        // allow player to trigger dice roll
+      }
+
+      // Primary Game workflow
+      function executeTurnWorkflow() {
+        const playerResult = rollTheDice();
+        const computerResult = rollTheDice();
+
+        const roundWinner = calculateRoundWinner(playerResult, computerResult);
+
+        switch (roundWinner) {
+          case winnerEnum.Computer:
+            if (computerResult.isDoubles) {
+              computerResult.points = parseInt(computerResult.points) * 2;
+            }
+
+            gameState.computerScore =
+              parseInt(gameState.computerScore) +
+              parseInt(computerResult.points);
+
+            gameState.playerScore =
+              parseInt(gameState.playerScore) + parseInt(playerResult.points);
+
+            break;
+          case winnerEnum.Player:
+            if (playerResult.isDoubles) {
+              playerResult.points = parseInt(playerResult.points) * 2;
+            }
+
+            gameState.computerScore =
+              parseInt(gameState.computerScore) +
+              parseInt(computerResult.points);
+
+            gameState.playerScore =
+              parseInt(gameState.playerScore) + parseInt(playerResult.points);
+
+            break;
+          default:
+            gameState.computerScore =
+              parseInt(gameState.computerScore) +
+              parseInt(computerResult.points);
+
+            gameState.playerScore =
+              parseInt(gameState.playerScore) + parseInt(playerResult.points);
+        }
+
+        const gameLead = calculateGameWinner();
+
+        if (gameLead.gameWon) {
+            gameWon(gameLead.currentGameLead);
+        }
+      }
+
+      // Generates two dice roles and return each role if a true/false for double
+      function rollTheDice() {
+        const rollOne = generateDiceRole();
+        const rollTwo = generateDiceRole();
+        return determineScore(rollOne, rollTwo);
+      }
+
+      // Generates random value between 1 and 6 for a individual dice roll
+      function generateDiceRole() {
+        return Math.floor(Math.random() * 6) + 1;
+      }
+
+      // determines the score to be added to the scoreboard
+      function determineScore(rollOne, rollTwo) {
+        if (rollOne == rollTwo) {
+          return {
+            points: parseInt(rollOne) + parseInt(rollTwo),
+            isDoubles: true,
+          };
+        }
+
+        return {
+          points: parseInt(rollOne) + parseInt(rollTwo),
+          isDoubles: false,
+        };
+      }
+
+      // checks if there is a winner for the round
+      function calculateRoundWinner(playerResult, computerResult) {
+        if (parseInt(playerResult.points) === parseInt(computerResult.points)) {
+          return winnerEnum.Tie;
+        }
+
+        return playerResult.points > computerResult.points
+          ? winnerEnum.Player
+          : winnerEnum.Computer;
+      }
+
+      function calculateGameWinner() {
+        return {
+          currentGameLead:
+            gameState.playerScore > gameState.computerScore
+              ? winnerEnum.Player
+              : winnerEnum.Computer,
+          gameWon:
+            gameState.playerScore >= 100 || gameState.computerScore >= 100
+              ? true
+              : false,
+        };
+      }
+
+      function gameWon(winner) {
+          // build game won UI
+          // display reset game button
+      }
+
+      // resets game state scores and resets game board UI
+      function quitGame() {
+        gameState = {
+          computerScore: 0,
+          playerScore: 0,
+          maxScore: 100,
+          gameIsWon: false,
+          activeGame: false,
+        };
+      }
+    </script>
+  </head>
+  <body>
+    <main></main>
+  </body>
+</html>
