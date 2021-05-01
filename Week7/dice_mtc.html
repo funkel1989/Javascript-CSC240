@@ -5,22 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dice Game</title>
-    <style></style>
     <script>
       const winnerEnum = Object.freeze({ Player: 1, Computer: 2, Tie: 3 });
 
-      const gameState = {
+      let gameState = {
         computerScore: 0,
-        playerScore: 0,
-        maxScore: 100,
-        gameIsWon: false,
-        activeGame: false,
+        playerScore: 0
       };
 
-      // onclick event for start game executions this function
       function startGame() {
-        // set UI elements for game state and game UI
-        // allow player to trigger dice roll
+        document.getElementById('startButton').disabled = true;
+        document.getElementById('quitButton').disabled = false;
+        document.getElementById('rollButton').disabled = false;
+
+        gameState = {
+          computerScore: 0,
+          playerScore: 0
+        };
+
+        document.getElementById("playerScore").innerHTML = `Player Score: ${gameState.playerScore}`;
+        document.getElementById("computerScore").innerHTML = `Computer Score: ${gameState.computerScore}`;
       }
 
       // Primary Game workflow
@@ -36,56 +40,48 @@
               computerResult.points = parseInt(computerResult.points) * 2;
             }
 
-            gameState.computerScore =
-              parseInt(gameState.computerScore) +
-              parseInt(computerResult.points);
-
-            gameState.playerScore =
-              parseInt(gameState.playerScore) + parseInt(playerResult.points);
-
+            addPoints(playerResult, computerResult);
             break;
           case winnerEnum.Player:
             if (playerResult.isDoubles) {
               playerResult.points = parseInt(playerResult.points) * 2;
             }
 
-            gameState.computerScore =
-              parseInt(gameState.computerScore) +
-              parseInt(computerResult.points);
-
-            gameState.playerScore =
-              parseInt(gameState.playerScore) + parseInt(playerResult.points);
-
+            addPoints(playerResult, computerResult);
             break;
           default:
-            gameState.computerScore =
-              parseInt(gameState.computerScore) +
-              parseInt(computerResult.points);
-
-            gameState.playerScore =
-              parseInt(gameState.playerScore) + parseInt(playerResult.points);
+            addPoints(playerResult, computerResult);
         }
 
         const gameLead = calculateGameWinner();
 
         if (gameLead.gameWon) {
-            gameWon(gameLead.currentGameLead);
+          gameWon(gameLead.currentGameLead);
+          return;
         }
+
+        document.getElementById("playerScore").innerHTML = `Player Score: ${gameState.playerScore}`;
+        document.getElementById("computerScore").innerHTML = `Computer Score: ${gameState.computerScore}`;
       }
 
-      // Generates two dice roles and return each role if a true/false for double
+      function addPoints(playerResult, computerResult) {
+        gameState.computerScore =
+          parseInt(gameState.computerScore) + parseInt(computerResult.points);
+
+        gameState.playerScore =
+          parseInt(gameState.playerScore) + parseInt(playerResult.points);
+      }
+
       function rollTheDice() {
         const rollOne = generateDiceRole();
         const rollTwo = generateDiceRole();
         return determineScore(rollOne, rollTwo);
       }
 
-      // Generates random value between 1 and 6 for a individual dice roll
       function generateDiceRole() {
         return Math.floor(Math.random() * 6) + 1;
       }
 
-      // determines the score to be added to the scoreboard
       function determineScore(rollOne, rollTwo) {
         if (rollOne == rollTwo) {
           return {
@@ -100,7 +96,6 @@
         };
       }
 
-      // checks if there is a winner for the round
       function calculateRoundWinner(playerResult, computerResult) {
         if (parseInt(playerResult.points) === parseInt(computerResult.points)) {
           return winnerEnum.Tie;
@@ -125,23 +120,94 @@
       }
 
       function gameWon(winner) {
-          // build game won UI
-          // display reset game button
+        document.getElementById('startButton').disabled = false;
+        document.getElementById('quitButton').disabled = true;
+        document.getElementById('rollButton').disabled = true;
+
+        if (winner === winnerEnum.Player) {
+            document.getElementById("playerScore").innerHTML = `Player WINS!`;
+            return;
+        }
+
+        if (winner === winnerEnum.Computer) {
+            document.getElementById("computerScore").innerHTML = `Computer WINS!`;
+            return;
+        }
       }
 
-      // resets game state scores and resets game board UI
       function quitGame() {
         gameState = {
           computerScore: 0,
-          playerScore: 0,
-          maxScore: 100,
-          gameIsWon: false,
-          activeGame: false,
+          playerScore: 0
         };
+
+        document.getElementById('startButton').disabled = false;
+        document.getElementById('quitButton').disabled = true;
+        document.getElementById('rollButton').disabled = true;
+        document.getElementById("playerScore").innerHTML = `Player Score: ${gameState.playerScore}`;
+        document.getElementById("computerScore").innerHTML = `Computer Score: ${gameState.computerScore}`;
       }
+
     </script>
+    <style>
+      .game-board {
+        justify-content: center;
+        width: 50%;
+        margin: auto;
+      }
+
+      .box {
+        background-color: blue;
+        border: 2px solid black;
+      }
+
+      .box_player {
+        float: left;
+      }
+
+      .box_computer {
+        float: right;
+      }
+
+      .button {
+        justify-content: center;
+        height: 60px;
+        margin: auto;
+      }
+    </style>
   </head>
   <body>
-    <main></main>
+    <main>
+      <div class="game-board">
+        <div class="box box_player">
+          <h1 id="playerScore">Player Score: 0</h1>
+        </div>
+        <div class="box box_computer">
+          <h1 id="computerScore">Computer Score: 0</h1>
+        </div>
+        <div>
+          <button
+            onclick="startGame()"
+            id="startButton"
+            class="button"
+            style="float: left"
+          >
+            Start Game
+          </button>
+          <button
+            id="rollButton"
+            disabled
+            class="button"
+            style="margin-left: 100px"
+            onclick="executeTurnWorkflow()"
+          >
+            Roll Dice
+          </button>
+          <button onclick="quitGame()" id="quitButton" disabled class="button" style="float: right">
+            Quit Game
+          </button>
+        </div>
+      </div>
+    </main>
   </body>
 </html>
